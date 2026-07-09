@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>calculator</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(to right, #fff9c4, #b3e5fc);
+    }
+
+    .price-div,
+    .name-div {
+      text-align: center;
+    }
+
+    .add-button {
+      font-size: 18px;
+      width: 100px;
+      height: 34px;
+      background-color: green;
+      border: none;
+      border-radius: 6px;
+      margin: 10px;
+    }
+
+    .expence-name,
+    .expence,
+    .date-time {
+      height: 30px;
+      width: 200px;
+      padding-left: 10px;
+      margin: 10px;
+      font-size: 18px;
+      vertical-align: top;
+    }
+
+    .date-time {
+      display: block;
+    }
+
+    .whole-expences {
+      font-size: 25px;
+      width: 800px;
+      color: black;
+      border: 5px solid gray;
+      margin-left: 10px;
+      padding: 5px 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      column-gap: 10px;
+      row-gap: 5px;
+      align-items: center;
+      text-align: center;
+    }
+
+    .final-expence {
+      font-size: 25px;
+      width: 800px;
+      color: black;
+      border: 5px solid gray;
+      margin-left: 10px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .delete-button {
+      background-color: red;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+      height: 50px;
+    }
+
+    .edit-button {
+      background-color: lightgreen;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+      height: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <p>Calculator Of Day</p>
+  <input class="date-time" type="date">
+  <input class="expence-name" type="text" placeholder="Type Your Spending">
+  <input class="expence" type="number" placeholder="Type Your Price">
+  <button class="add-button" onclick="">Add</button>
+  <div class="whole-expences"></div>
+  <div class="final-expence"></div>
+
+
+
+
+  <script>
+    let spend = JSON.parse(localStorage.getItem('spend')) || [];
+    let asf = document.querySelector('.add-button');
+    asf.addEventListener('click', () => {
+      //adding to spend
+      let name = document.querySelector('.expence-name');
+      let price = document.querySelector('.expence');
+      let html = '';
+      if (name.value === '' || price.value === '') return;
+      spend.push({
+        name: name.value,
+        price: Number(price.value)
+      })
+      localStorage.setItem('spend', JSON.stringify(spend));
+      
+      name.value = '';
+      price.value = '';
+
+      render();
+
+    })
+    const render = () => {
+      let sum = 0;
+      let html_2 = '';
+      spend.forEach((x, y) => {
+        html_2 += `<div>${x.name}</div><div>${x.price} تومان</div><div><button class="delete-button" onclick ="
+          spend.splice(${y},1);
+          localStorage.setItem('spend', JSON.stringify(spend));
+          render();
+          ">Delete</button></div><div><button class="edit-button" onclick="
+          document.querySelector('.expence-name').value = spend[${y}].name;
+          document.querySelector('.expence').value = spend[${y}].price;
+          spend.splice(${y},1);
+          localStorage.setItem('spend', JSON.stringify(spend));
+          render();
+          ">Edit</button></div>`
+      })
+      document.querySelector('.whole-expences').innerHTML = html_2;
+      for (let i = 0; i < spend.length; i++) {
+        sum += Number(spend[i].price);
+      }
+      document.querySelector('.final-expence').innerHTML = `final expence of day is = ${sum} تومان`;
+    }
+    render();
+    
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    .body {
+      box-sizing: border-box;
+    }
+
+    .intro {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .subescribe-button {
+      background-color: black;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      color: white;
+      border-radius: 15px;
+      border: none;
+      padding: 8px 12px;
+      font-weight: bold;
+    }
+
+    .is-subscribed {
+      background-color: rgb(240, 240, 240);
+      color: black;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+
+    }
+
+    .input-area {
+      padding: 12px;
+      width: 180px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .calculate-button {
+      vertical-align: middle;
+      padding: 12px 18px;
+      border: none;
+      background-color: green;
+      color: white;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <p class="intro">YouTube Subscribe Button</p>
+  <button class="subescribe-button" onclick="
+  subescribe();
+  
+  ">Subscribe</button>
+  <p style="margin-top: 80px;">Amazon Shipping Calculator</p>
+  <p>Oreders under 40$ = +10$ shipping</p>
+  <p>Orders over 40$ = Free Shipping</p>
+
+  <input onkeydown="
+  if (event.key === 'Enter'){
+    Calculator_of_Shipping();
+  }
+  " class="input-area" placeholder="Enter the proucts price">
+  <button class="calculate-button" onclick="
+  
+  Calculator_of_Shipping();
+   ">Calculate</button>
+  <p class="shipping-price"></p>
+
+  <script>
+    let button_text = document.querySelector('.subescribe-button');
+    function subescribe() {
+      if (button_text.innerText === 'Subscribe') {
+        button_text.innerHTML = 'Subscribed';
+        button_text.classList.add('is-subscribed');
+      } else {
+        button_text.innerHTML = 'Subscribe';
+        button_text.classList.remove('is-subscribed');
+      }
+    }
+
+
+    function Calculator_of_Shipping() {
+      let input_value = Number(document.querySelector('.input-area').value);
+      if (input_value < 0) {
+        document.querySelector('.shipping-price').innerHTML = 'Error : cost cannot be less than 0$';
+      }else if (input_value === 0) {
+        document.querySelector('.shipping-price').innerHTML = 'Error : cost cannot be equal to  0$ it means you havent bought yet ';
+      }else {
+        document.querySelector('.shipping-price').innerHTML = input_value <= 40 ? '' + (input_value + 10) + '$' : '' + input_value + '$ shipping is free';
+      }
+      
+    }
+
+
+  </script>
+
+</body>
+
+</html>

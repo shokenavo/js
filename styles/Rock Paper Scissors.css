@@ -1,0 +1,31 @@
+body{
+      font-family: Arial, Helvetica, sans-serif;
+      background-color : rgb(25,25,25);
+      color: white;
+    }
+    .intro{
+      font-size: 30px;
+      font-weight: bold;
+    }
+    .move-button{
+      background: transparent;
+      border: white 3px solid;
+      margin-right: 12px;
+      height: 120px;
+      padding: 32px;
+      border-radius: 60%;
+    }
+    .move-img{
+      height: 50px;
+    }
+    .Result{
+      margin-top: 52px;
+      font-size: 24px;
+      font-weight: bold;
+      }
+    .Reset-score{
+      font-size: 15px;
+      padding: 8px 15px;
+      border: none;
+      background-color: white;
+      }

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    .grid{
+      width: 500px;
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border:2px solid gray;
+    }
+    .pic{
+      width:50px;
+    }
+    @media (max-width:1000px){
+      .grid{
+        grid-template-columns: 1fr 1fr;
+      }
+      .money{
+        grid-column:2 /span 1;
+      }
+    }
+  </style>
+</head>
+
+
+
+
+<body>
+  <div class="grid">
+    <div class="img"><img class="pic" src="/images/paper-emoji.png"> </div>
+    <div class="info">
+      this game is about
+    </div>
+    <div class="money">1254$</div>
+  </div>
+
+
+
+
+
+
+
+
+</body>
+
+
+
+
+
+
+
+</html>

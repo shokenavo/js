@@ -1,0 +1,62 @@
+main{
+  margin-top:90px;
+  max-width:850px;
+  margin-left:auto;
+  margin-right:auto;
+  padding-right:30px;
+  padding-left:30px;
+}
+.order-tracking{
+  font-family:Roboto,Arial;
+  color:black;
+}
+
+.view-of-pro{
+  color:rgb(6, 136, 175);
+  
+}
+.arrive-time{
+  font-size:25px;
+  font-weight:700;
+  margin-top:30px;
+  margin-bottom:10px;
+}
+.pro-name{
+  margin-bottom:3px;
+}
+.quantity{
+  margin-bottom:28px;
+}
+.pro-img-div{
+  width:160px;
+  margin-bottom:50px;
+}
+.pro-img{
+  width:135px;
+}
+.delivery-situ{
+  font-size:20px;
+  font-weight:500;
+  display:flex;
+  justify-content:space-between;
+}
+.shipping{
+  color:green;
+  margin-bottom:15px;
+}
+.loading-container{
+  width:100%;
+  border: 1px solid rgb(192, 192, 192);
+  height:25px;
+  border-radius:45px;
+  overflow:hidden;
+}
+.loading{
+  width:50%;
+  background-color:green;
+  border-radius:45px;
+  height:100%;
+}
+@media (max-width:575px){
+  
+}

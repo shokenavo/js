@@ -1,0 +1,134 @@
+
+main{
+  max-width:850px;
+  margin-left:auto;
+  margin-right:auto;
+  padding-right:25px;
+  padding-left:25px;
+  margin-top:90px;
+  margin-bottom:100px;
+}
+.orders-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  row-gap:45px;
+  margin-bottom:40px;
+}
+.page-title{
+  font-size:26px;
+  font-weight:bold;
+  margin-bottom:24px;
+}
+.order-detail{
+  padding:20px 25px;
+  border: 1px solid rgb(213, 217, 217);
+  background-color:rgba(240, 242, 242);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  display: grid;
+  grid-template-columns:140px 120px 1fr;
+}
+.order-detail-left-sesion{
+  display:flex;
+}
+
+.order-established-time{
+  font-weight:500;
+}
+.order-id{
+  text-align:end;
+}
+.order-id-title{
+  padding-right:236px;
+  font-weight:500;
+}
+.total-cost{
+  padding-left:2px;
+}
+.total-cost-title{
+  font-weight:500;
+}
+
+
+.order-detail-grid{
+  padding:40px 25px;
+  border: 1px solid rgb(213, 217, 217);
+  border-top:none;
+  display:grid;
+  grid-template-columns:110px 1fr 220px;
+  column-gap:35px;
+  row-gap:60px;
+}
+@media (max-width:800px){
+  .order-detail-grid{
+    grid-template-columns:110px 1fr;
+  }
+  .track-package-div{
+    grid-column:2;
+    width:140px;
+    
+  }
+  .track-package-button{
+    padding:8px 10px;
+  }
+}
+.product-img{
+  max-width:110px;
+  max-height:110px;
+  margin-left:4px;
+}
+.product-name{
+  font-weight:700;
+  margin-top:2px;
+  margin-bottom:4px;
+}
+.product-arriving{
+  margin-bottom:4px;
+}
+.product-quanity{
+  margin-bottom:8px;
+}
+.product-buy-again{
+  font-family: Roboto,Arial;
+  background-color: rgba(247, 202, 0, 0.714);
+  border: 1px solid rgb(242, 194, 0);
+  display:flex;
+  align-items:center;
+  width:140px;
+  border-radius:8px;
+  justify-content: center;
+  font-size:15px;
+  padding:5px 0;
+  cursor:pointer;
+}
+.product-buy-again:hover{
+  background-color: rgba(234, 192, 4, 0.815);
+  border: 1px solid rgb(242, 194, 0);
+}
+.product-buy-again-img{
+  width: 25px;
+  margin-right:15px;
+}
+
+
+.track-package-div{
+  display: flex;
+  align-items:start;
+}
+.track-package-button{
+  font-family:Roboto,Arial;
+  width:100%;
+  padding: 8px 25px;
+  font-size:15px;
+  background-color:white;
+  border: 1px solid rgb(213, 217, 217);
+  border-radius:8px;
+  box-shadow:0 2px 5px rgba(171, 172, 171, 0.676);
+  cursor:pointer;
+}
+.track-package-button:hover{
+  background-color:rgba(128, 128, 128, 0.064);
+}
+.track-package{
+  width:100%;
+}
