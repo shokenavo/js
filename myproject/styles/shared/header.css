@@ -140,15 +140,15 @@ input:focus {
   font-weight: bold;
 }
 
-.cart-number-div {
-  position: absolute;
-  right: 48px;
-  bottom: 18px;
-}
+
 
 .cart-number-p {
   color: rgb(214, 142, 8);
   font-weight: bold;
+  font-size:16px;
+  position: absolute;
+  right: 45px;
+  bottom: 20px;
 }
 
 .header-link {
