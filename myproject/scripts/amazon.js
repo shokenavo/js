@@ -1,4 +1,5 @@
-
+import {cart} from '../data/cart.js';
+import {products} from '../data/products.js';
 let html = ''
 products.forEach((product) => {
   html += `
@@ -9,7 +10,7 @@ products.forEach((product) => {
           <div class="rate-number">${product.rating.count}</div>
         </div>
         <div class="price-div">$${(product.priceCents / 100).toFixed(2)} </div>
-        <select id="quantity" name="quantity">
+        <select class="js-select-input" id="quantity" name="quantity">
           <option value="1" selected>1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -59,13 +60,6 @@ document.querySelectorAll('.js-add-to-cart').forEach( (button)=> {
 
     document.querySelector('.js-cart-number').innerHTML = 
     `<p class="cart-number-p">${cartQuantity}</p>`
-
-    console.log(cart);
-    console.log(cartQuantity);
-
-
-    
-    
 
 
   })
