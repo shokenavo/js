@@ -14,7 +14,8 @@ cart.forEach((item) => {
 
 
   checkout_product += `
-          <div class="container-of-order">
+          <div class="container-of-order 
+          js-container-of-order-${selected_item.id}">
           <div class="delivery-date">Delivery date: Tuesday, June 21</div>
           <div class="cart-item-detail-grid">
             <div class="div-order-picture">
@@ -25,7 +26,7 @@ cart.forEach((item) => {
               <div class="item-price">$${formatCurrency(selected_item.priceCents)}</div>
               <div class="item-number"><span>Quantity:<span class="quanity-label">${item.quantity}</span></span>
                 <a class="updatelink">Update</a>
-                <a class="deletelink js-delete-button" data-delete-item = "${selected_item.id}">Delete</a>
+                <a class="deletelink js-delete-button" data-delete-button = "${selected_item.id}">Delete</a>
               </div>
             </div>
             <div class="delivery-options">
@@ -62,7 +63,11 @@ document.querySelector('.js-order-summary').innerHTML = checkout_product;
 
 document.querySelectorAll('.js-delete-button').forEach((item)=>{
   item.addEventListener('click' , ()=>{
-    const prouductId = item.dataset.deleteItem;
+    const prouductId = item.dataset.deleteButton;
     delete_cart_item(prouductId);
+
+    const container = document.querySelector(`.js-container-of-order-${prouductId}`);
+    
+    container.remove();
   })
 })
