@@ -1,19 +1,18 @@
 import {products} from '../data/products.js';
 
-export let cart = [{
-  productId : 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
-  quantity : 1
-  },{
-  productId : '15b6fc6f-327a-4ec4-896f-486349e85a3d',
-  quantity:1
+export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  }
-];
-export function addtocart(productid) {
+
+
+function addToLocal(){
+  localStorage.setItem('cart',JSON.stringify(cart));
+}
+
+export function addtocart(productId) {
     let matchItem;
     
     cart.forEach((cartItem) => {
-      if (productid === cartItem.productid){
+      if (productId === cartItem.productId){
         matchItem = cartItem;
       }
     })
@@ -22,11 +21,11 @@ export function addtocart(productid) {
       matchItem.quantity +=1;
     }else {
       cart.push({
-        productid: productid,
+        productId: productId,
         quantity:1
       })
     }
-    
+    addToLocal();
 };
 export function delete_cart_item(productId){
   let new_cart =[];
@@ -40,5 +39,5 @@ export function delete_cart_item(productId){
   })
 
   cart = new_cart;
-  console.log(cart);
+  addToLocal();
 };

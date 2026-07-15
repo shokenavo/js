@@ -10,6 +10,7 @@ cart.forEach((item) => {
     if (p_item.id === item.productId) {
       selected_item = p_item;
     }
+   
   });
 
 

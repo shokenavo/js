@@ -47,10 +47,9 @@ document.querySelector('.js-grid-container').innerHTML = html;
 
 document.querySelectorAll('.js-add-to-cart').forEach( (button)=> {
   button.addEventListener('click',()=> {
-    const productid =button.dataset.productId;
-    addtocart(productid);
+    const productId =button.dataset.productId;
+    addtocart(productId);
     updateCartQuantity();
-    console.log(cart);
     
 
   })
