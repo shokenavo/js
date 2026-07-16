@@ -6,6 +6,7 @@ export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 function addToLocal(){
   localStorage.setItem('cart',JSON.stringify(cart));
+
 }
 
 export function addtocart(productId) {

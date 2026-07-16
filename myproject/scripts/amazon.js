@@ -29,17 +29,18 @@ products.forEach((product) => {
 document.querySelector('.js-grid-container').innerHTML = html;
 
  function updateCartQuantity(){
-  let cartQuantity =0;
+  let cartQuantity =  0;
 
     cart.forEach((cartItem) =>{
       cartQuantity += cartItem.quantity;
     })
 
+  
     document.querySelector('.js-cart-number').innerHTML = 
     `<p class="cart-number-p">${cartQuantity}</p>`
-
+   
 }
-
+ updateCartQuantity();
 
 
 
