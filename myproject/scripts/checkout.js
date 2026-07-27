@@ -1,5 +1,5 @@
 import { products } from "../data/products.js";
-import { cart, delete_cart_item, getCartQuantity, setCartQuantity } from '../data/cart.js';
+import { cart, delete_cart_item, getCartQuantity, setCartQuantity, updateDeliveryOption } from '../data/cart.js';
 import { formatCurrency } from './utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { deliveryOptions } from '../data/deliveryOptions.js';
@@ -11,7 +11,7 @@ deliveryDate.format('dddd ,MMMM D');
 createContainer();
 
 // this part makes container of container in checkout
-export function createContainer() {
+function createContainer() {
   let checkout_product = '';
   cart.forEach((item) => {
 
@@ -23,20 +23,20 @@ export function createContainer() {
       }
 
     });
-    
+
     let timeString;
-    deliveryOptions.forEach((deliveryOption)=>{
-      
+    deliveryOptions.forEach((deliveryOption) => {
+
       let deliveryDate;
-      if (deliveryOption.id === item.deliveryOptionId){
+      if (deliveryOption.id === item.deliveryOptionId) {
         deliveryDate = deliveryOption.deliveryDays
-      }else return;
+      } else return;
       let today = dayjs();
       let deliverytime = today.add(
-        deliveryDate,'days'
+        deliveryDate, 'days'
       );
       timeString = deliverytime.format('dddd, MMMM D');
-      
+
     })
 
     checkout_product += `
@@ -66,30 +66,38 @@ export function createContainer() {
 
   });
   document.querySelector('.js-order-summary').innerHTML = checkout_product;
-}
+  // it says what happens when an input is clicked
+  document.querySelectorAll('.js-delivery-option').forEach((element) => {
+    element.addEventListener(('click'), () => {
+      let productId = element.dataset.productId;
+      let deliveryOptionId = element.dataset.deliveryOption;
+      updateDeliveryOption(productId, deliveryOptionId);
+      createContainer();
+    });
+  });
 
-function deliveryOptionHTML(selected_item, cartItem) {
-
-
-
-
-  let html = '';
-  deliveryOptions.forEach((deliveryOption) => {
-
-    const today = dayjs();
-    const deliveryDate = today.add(
-      deliveryOption.deliveryDays, 'days'
-    );
-    let dataString = deliveryDate.format('dddd , MMMM D');
-    let deliveryPrice = deliveryOption.priceCents === 0
-      ? 'FREE'
-      : `$${formatCurrency(deliveryOption.priceCents)} -`
-
-    const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
+  function deliveryOptionHTML(selected_item, cartItem) {
 
 
 
-    html += `<div class="delivery-option">
+
+    let html = '';
+    deliveryOptions.forEach((deliveryOption) => {
+
+      const today = dayjs();
+      const deliveryDate = today.add(
+        deliveryOption.deliveryDays, 'days'
+      );
+      let dataString = deliveryDate.format('dddd , MMMM D');
+      let deliveryPrice = deliveryOption.priceCents === 0
+        ? 'FREE'
+        : `$${formatCurrency(deliveryOption.priceCents)} -`
+
+      const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
+
+
+
+      html += `<div class="delivery-option js-delivery-option" data-delivery-option = "${deliveryOption.id}" data-product-id = "${selected_item.id}" >
         <input ${isChecked ? 'checked' : ''} class="delivery-option-input" type="radio" name="day_${selected_item.id}">
         <div>
           <div class="delivery-option-date">${dataString}</div>
@@ -97,21 +105,17 @@ function deliveryOptionHTML(selected_item, cartItem) {
         </div>
       </div>`
 
-  });
-  return html;
+    });
+    return html;
 
-
-
-
-
+  }
 }
 
 
 
 
 
-
-// this does remove of caontainer 
+// this does remove of container 
 function removeProductFromPage(productId) {
   const container = document.querySelector(`.js-container-of-order-${productId}`);
 

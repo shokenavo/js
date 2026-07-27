@@ -63,3 +63,18 @@ export function setCartQuantity(productId, newQuantity) {
     }
   })
 };
+
+// it changes the carts items deliveryoption 
+export function updateDeliveryOption(productId , deliveryOptionId){
+  let matchItem;
+
+  cart.forEach((cartItem) => {
+    if (productId === cartItem.productId) {
+      matchItem = cartItem;
+    }
+  })
+
+  matchItem.deliveryOptionId = deliveryOptionId;
+  addToLocal();
+  
+}
