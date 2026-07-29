@@ -30,18 +30,13 @@
       position: fixed;
       background: #CFE8FF;
       color: #F8B4B4;
-      border: 1px gray solid;
-      border-radius: 15px;
-      width: 200px;
-      height: 180px;
-      font-size: 28px;
     }
 
     .yes-button,
     .no-button {
       border: 1px gray solid;
-      height: 180px;
-      width: 200px;
+      height: 90px;
+      width: 100px;
       margin: 0px 10px;
       border-radius: 15px;
       font-size: 28px;
@@ -109,6 +104,9 @@
       }
     }
 
+    no.style.position = "fixed";
+    no.style.left = rect.left + "px";
+    no.style.top = rect.top + "px";
     // کامپیوتر
     document.addEventListener("mousemove", (e) => {
       runAway(e.clientX, e.clientY);
