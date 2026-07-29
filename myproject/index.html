@@ -27,12 +27,14 @@
     }
 
     .no-button {
+      position: fixed;
       background: #CFE8FF;
       color: #F8B4B4;
-
-      position: fixed;
-      /* یا absolute */
-      transition: left 0.2s ease, top 0.2s ease;
+      border: 1px gray solid;
+      border-radius: 15px;
+      width: 200px;
+      height: 180px;
+      font-size: 28px;
     }
 
     .yes-button,
@@ -80,26 +82,52 @@
       alert('با تشکر زمان دیت برای شما ارسال میشود (×-|-×)')
     })
 
-    document.addEventListener('mousemove', (e) => {
+
+
+    function runAway(x, y) {
       const rect = no.getBoundingClientRect();
 
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
-      const distance = Math.hypot(
-        e.clientX - centerX,
-        e.clientY - centerY
-      );
+      const distance = Math.hypot(x - centerX, y - centerY);
 
-      if (distance < 250) { // قبلاً 120 بود
-        const padding = 50;
+      // از فاصله زیاد هم فرار کنه
+      if (distance < 250) {
 
-        const x = Math.random() * (window.innerWidth - no.offsetWidth - padding * 2) + padding;
-        const y = Math.random() * (window.innerHeight - no.offsetHeight - padding * 2) + padding;
+        let newX = Math.random() * (window.innerWidth - no.offsetWidth);
+        let newY = Math.random() * (window.innerHeight - no.offsetHeight);
 
-        no.style.left = `${x}px`;
-        no.style.top = `${y}px`;
+        // اگر دوباره نزدیک انگشت یا موس افتاد، دوباره جای جدید انتخاب کن
+        while (Math.hypot(newX - x, newY - y) < 250) {
+          newX = Math.random() * (window.innerWidth - no.offsetWidth);
+          newY = Math.random() * (window.innerHeight - no.offsetHeight);
+        }
+
+        no.style.left = `${newX}px`;
+        no.style.top = `${newY}px`;
       }
+    }
+
+    // کامپیوتر
+    document.addEventListener("mousemove", (e) => {
+      runAway(e.clientX, e.clientY);
+    });
+
+    // گوشی
+    document.addEventListener("touchmove", (e) => {
+      const touch = e.touches[0];
+      runAway(touch.clientX, touch.clientY);
+    });
+
+    // اگر مستقیم روی دکمه لمس شد، باز هم فرار کن
+    no.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+
+      runAway(
+        e.touches[0].clientX,
+        e.touches[0].clientY
+      );
     });
   </script>
 
