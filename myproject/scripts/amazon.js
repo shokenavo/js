@@ -32,7 +32,7 @@ document.querySelector('.js-grid-container').innerHTML = html;
 function updateCartQuantity() {
   let cartQuantity = 0;
 
-  cartQuantity = getCartQuantity(cartQuantity);
+  cartQuantity = getCartQuantity();
 
 
   document.querySelector('.js-cart-number').innerHTML =

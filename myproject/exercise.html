@@ -3,21 +3,80 @@
 
 <head>
   <style>
-    .div .button {
-      background: black;
-      color: white;
+    body {
+      background: linear-gradient(135deg,
+          #ebc8d0 0%,
+          #FFD6E8 45%,
+          #FCE4F6 100%);
+    }
 
+    .main-one {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height:100vh;
+    }
+    .yes-button{
+      background:#F8B4B4;
+      --direction : -50px;
+      color:#CFE8FF;
+      transition : transform 3s ;
+    }
+    .no-button{
+      background:#CFE8FF;
+      --direction : 50px;
+      color:#F8B4B4;
+
+    }
+    .yes-button , .no-button {
+      border: 1px gray solid;
+      height:180px;
+      width:200px;
+      margin : 0px 10px;
+      border-radius:15px;
+      font-size:28px;
+    }
+    button{
+      animation: yes-no 2s infinite ease-in-out;
+    }
+    
+    @keyframes yes-no {
+      0%  , 100%{
+        transform : translateX(0);
+      }
+      50%{
+        transform: translateX(var(--direction));
+      }
+      
+    }
+    .bigYes{
+      transform : scale(4);
+      
     }
   </style>
 </head>
 
 <body>
-  <div class="div">
-    <button class="button">hello</button>
+  <div class="main-one">
+    <div class="yes"><button class="yes-button">اره</button></div>
+    <div class="no"><button class="no-button">نچ</button></div>
+  
   </div>
+
+
+
   <script>
-
-
+    let yes = document.querySelector('.yes-button');
+    let no = document.querySelector('.no-button');
+    no.addEventListener('click', ()=>{
+      no.style.animation = 'none';
+      yes.style.animation = "none";
+      yes.classList.add('bigYes');
+    })
+    yes.addEventListener('click',()=>{
+      alert('با تشکر زمان دیت برای شما ارسال میشود (×-|-×)')
+    })
+   
   </script>
 
 

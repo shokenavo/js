@@ -1,8 +1,10 @@
-import { products } from '../../data/products.js';
+import { products,getProduct } from '../../data/products.js';
 import { cart, delete_cart_item, getCartQuantity, setCartQuantity, updateDeliveryOption } from '../../data/cart.js';
 import { formatCurrency } from '../utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { deliveryOptions } from '../../data/deliveryOptions.js';
+import {renderPaymentSummary} from './paymentSummary.js';
+
 const today = dayjs();
 const deliveryDate = today.add(7, 'years');
 deliveryDate.format('dddd ,MMMM D');
@@ -10,19 +12,14 @@ deliveryDate.format('dddd ,MMMM D');
 
 createContainer();
 
+
+
 // this part makes container of container in checkout
 export function createContainer() {
   let checkout_product = '';
   cart.forEach((item) => {
 
-    let selected_item;
-
-    products.forEach((p_item) => {
-      if (p_item.id === item.productId) {
-        selected_item = p_item;
-      }
-
-    });
+    let selected_item = getProduct(item.productId)
 
     let timeString;
     deliveryOptions.forEach((deliveryOption) => {
@@ -67,12 +64,16 @@ export function createContainer() {
   });
   document.querySelector('.js-order-summary').innerHTML = checkout_product;
   // it says what happens when an input is clicked
+
+
+
   document.querySelectorAll('.js-delivery-option').forEach((element) => {
     element.addEventListener(('click'), () => {
       let productId = element.dataset.productId;
       let deliveryOptionId = element.dataset.deliveryOption;
       updateDeliveryOption(productId, deliveryOptionId);
       createContainer();
+      
     });
   });
 
@@ -124,21 +125,26 @@ function removeProductFromPage(productId) {
 }
 
 
+
 // this part make delete button works
 document.querySelectorAll('.js-delete-button').forEach((item) => {
   item.addEventListener('click', () => {
     const productId = item.dataset.deleteButton;
     delete_cart_item(productId);
-
     removeProductFromPage(productId);
   })
 })
+
+
+
+
+
 //it gives the number of items AND makes header  and checkout-header
 function checkoutHeaderQuantity() {
   let cartQuantity = 0;
 
 
-  cartQuantity = getCartQuantity(cartQuantity);
+  cartQuantity = getCartQuantity();
 
 
   let checkout_header = ``;
@@ -161,6 +167,8 @@ function checkoutHeaderQuantity() {
 }
 checkoutHeaderQuantity();
 
+
+
 //this part interactive update link 
 document.querySelectorAll('.js-update-link').forEach((update_link) => {
   update_link.addEventListener('click', () => {
@@ -168,13 +176,13 @@ document.querySelectorAll('.js-update-link').forEach((update_link) => {
 
     let parent_div = document.querySelector(`.item-number-${productId}`);
     parent_div.classList.add('is-editing-quantity');
-
     changeCartQuantity();
-
-
-
   })
 })
+
+
+
+
 // this part upadte quantity to what we save later, it gives our input
 let changeCartQuantity = function () {
 
@@ -205,6 +213,7 @@ let saveQuantity = function (productId) {
 
   setCartQuantity(productId, entered_quantity);
   checkoutHeaderQuantity();
+  renderPaymentSummary();
   document.querySelector(`.js-quantity-lable-${productId}`).innerHTML = entered_quantity;
   let parent_div = document.querySelector(`.item-number-${productId}`);
   parent_div.classList.remove('is-editing-quantity');

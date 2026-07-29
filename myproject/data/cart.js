@@ -1,5 +1,5 @@
 import { products } from '../data/products.js';
-
+import {renderPaymentSummary} from '../scripts/checkout/paymentSummary.js';
 
 export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -44,10 +44,11 @@ export function delete_cart_item(productId) {
 
   cart = new_cart;
   addToLocal();
-  
+  renderPaymentSummary();
 };
 //this part calculate totla of cartQuantity in different scripts
-export function getCartQuantity(cartQuantity) {
+export function getCartQuantity() {
+  let cartQuantity = 0;
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
   })
