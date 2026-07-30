@@ -1,13 +1,11 @@
-import { products,getProduct } from '../../data/products.js';
+import { products, getProduct } from '../../data/products.js';
 import { cart, delete_cart_item, getCartQuantity, setCartQuantity, updateDeliveryOption } from '../../data/cart.js';
 import { formatCurrency } from '../utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { deliveryOptions } from '../../data/deliveryOptions.js';
-import {renderPaymentSummary} from './paymentSummary.js';
+import { renderPaymentSummary } from './paymentSummary.js';
 
-const today = dayjs();
-const deliveryDate = today.add(7, 'years');
-deliveryDate.format('dddd ,MMMM D');
+
 
 
 createContainer();
@@ -73,7 +71,7 @@ export function createContainer() {
       let deliveryOptionId = element.dataset.deliveryOption;
       updateDeliveryOption(productId, deliveryOptionId);
       createContainer();
-      
+
     });
   });
 
@@ -84,12 +82,10 @@ export function createContainer() {
 
     let html = '';
     deliveryOptions.forEach((deliveryOption) => {
-
-      const today = dayjs();
-      const deliveryDate = today.add(
-        deliveryOption.deliveryDays, 'days'
-      );
+      let deliveryDate = isWeekend(deliveryOption);
       let dataString = deliveryDate.format('dddd , MMMM D');
+
+      
       let deliveryPrice = deliveryOption.priceCents === 0
         ? 'FREE'
         : `$${formatCurrency(deliveryOption.priceCents)} -`
@@ -116,39 +112,39 @@ export function createContainer() {
 
 
 
-// this does remove of container 
-function removeProductFromPage(productId) {
-  const container = document.querySelector(`.js-container-of-order-${productId}`);
+  // this does remove of container 
+  function removeProductFromPage(productId) {
+    const container = document.querySelector(`.js-container-of-order-${productId}`);
 
-  container.remove();
-  checkoutHeaderQuantity();
-}
+    container.remove();
+    checkoutHeaderQuantity();
+  }
 
 
 
-// this part make delete button works
-document.querySelectorAll('.js-delete-button').forEach((item) => {
-  item.addEventListener('click', () => {
-    const productId = item.dataset.deleteButton;
-    delete_cart_item(productId);
-    removeProductFromPage(productId);
+  // this part make delete button works
+  document.querySelectorAll('.js-delete-button').forEach((item) => {
+    item.addEventListener('click', () => {
+      const productId = item.dataset.deleteButton;
+      delete_cart_item(productId);
+      removeProductFromPage(productId);
+    })
   })
-})
 
 
 
 
 
-//it gives the number of items AND makes header  and checkout-header
-function checkoutHeaderQuantity() {
-  let cartQuantity = 0;
+  //it gives the number of items AND makes header  and checkout-header
+  function checkoutHeaderQuantity() {
+    let cartQuantity = 0;
 
 
-  cartQuantity = getCartQuantity();
+    cartQuantity = getCartQuantity();
 
 
-  let checkout_header = ``;
-  checkout_header += ` <div class="middle-of-header">
+    let checkout_header = ``;
+    checkout_header += ` <div class="middle-of-header">
       <div class="left-of-middle">
         <a class="logo-of-header" href="amazon.html">
           <img class="amazon-logo" src="images/amazon-logo.png">
@@ -163,72 +159,98 @@ function checkoutHeaderQuantity() {
       </div>
     </div>
 `;
-  document.querySelector('.js-checkout-header').innerHTML = checkout_header;
-}
-checkoutHeaderQuantity();
-
-
-
-//this part interactive update link 
-document.querySelectorAll('.js-update-link').forEach((update_link) => {
-  update_link.addEventListener('click', () => {
-    let productId = update_link.dataset.updateLink;
-
-    let parent_div = document.querySelector(`.item-number-${productId}`);
-    parent_div.classList.add('is-editing-quantity');
-    changeCartQuantity();
-  })
-})
-
-
-
-
-// this part upadte quantity to what we save later, it gives our input
-let changeCartQuantity = function () {
-
-  document.querySelectorAll('.link-primary').forEach((save_link) => {
-
-    let productId = save_link.dataset.saveLink;
-    save_link.addEventListener('click', () => {
-      saveQuantity(productId);
-
-
-    })
-  })
-}
-let saveQuantity = function (productId) {
-  let entered_quantity = Number(document.querySelector(`.js-quantity-input-${productId}`).value);
-
-
-  if (entered_quantity < 0 || !Number.isInteger(entered_quantity)) {
-    alert('not valid input');
-    return;
+    document.querySelector('.js-checkout-header').innerHTML = checkout_header;
   }
-  if (entered_quantity === 0) {
-
-    delete_cart_item(productId);
-    removeProductFromPage(productId);
-    return;
-  }
-
-  setCartQuantity(productId, entered_quantity);
   checkoutHeaderQuantity();
-  renderPaymentSummary();
-  document.querySelector(`.js-quantity-lable-${productId}`).innerHTML = entered_quantity;
-  let parent_div = document.querySelector(`.item-number-${productId}`);
-  parent_div.classList.remove('is-editing-quantity');
-}
-function makeEnterSaves() {
-  document.querySelectorAll('.quantity-input').forEach((input_item) => {
-    input_item.addEventListener('keydown', (event) => {
-      if (event.key === "Enter") {
-        let productId = input_item.dataset.inputItem;
-        saveQuantity(productId);
-      }
-    })
 
+
+
+  //this part interactive update link 
+  document.querySelectorAll('.js-update-link').forEach((update_link) => {
+    update_link.addEventListener('click', () => {
+      let productId = update_link.dataset.updateLink;
+
+      let parent_div = document.querySelector(`.item-number-${productId}`);
+      parent_div.classList.add('is-editing-quantity');
+      changeCartQuantity();
+    })
   })
 
-}
-makeEnterSaves();
+
+
+
+  // this part upadte quantity to what we save later, it gives our input
+  let changeCartQuantity = function () {
+
+    document.querySelectorAll('.link-primary').forEach((save_link) => {
+
+      let productId = save_link.dataset.saveLink;
+      save_link.addEventListener('click', () => {
+        saveQuantity(productId);
+
+
+      })
+    })
+  }
+  let saveQuantity = function (productId) {
+    let entered_quantity = Number(document.querySelector(`.js-quantity-input-${productId}`).value);
+
+
+    if (entered_quantity < 0 || !Number.isInteger(entered_quantity)) {
+      alert('not valid input');
+      return;
+    }
+    if (entered_quantity === 0) {
+
+      delete_cart_item(productId);
+      removeProductFromPage(productId);
+      return;
+    }
+
+    setCartQuantity(productId, entered_quantity);
+    checkoutHeaderQuantity();
+    renderPaymentSummary();
+    document.querySelector(`.js-quantity-lable-${productId}`).innerHTML = entered_quantity;
+    let parent_div = document.querySelector(`.item-number-${productId}`);
+    parent_div.classList.remove('is-editing-quantity');
+  }
+  function makeEnterSaves() {
+    document.querySelectorAll('.quantity-input').forEach((input_item) => {
+      input_item.addEventListener('keydown', (event) => {
+        if (event.key === "Enter") {
+          let productId = input_item.dataset.inputItem;
+          saveQuantity(productId);
+        }
+      })
+
+    })
+
+  }
+  makeEnterSaves();
+
+  function isWeekend(deliveryOption) {
+    let today = dayjs();
+    let deliveryDate = today.add(
+      deliveryOption.deliveryDays, 'days'
+    );
+    let date = deliveryDate.format('dddd');
+    if (date === 'Sunday') {
+      date = 1;
+    }
+    else if (date === 'Saturday') {
+      date = 0;
+    }
+    else date = 2;
+
+    if (date === 0) {
+      deliveryDate = today.add(
+        ((deliveryOption.deliveryDays) + 2), 'days'
+      );
+    } else if (date === 1) {
+      deliveryDate = today.add(
+        ((deliveryOption.deliveryDays) + 1), 'days'
+      );
+    }
+    return deliveryDate;
+  }
 }
