@@ -46,7 +46,7 @@ export function delete_cart_item(productId) {
   addToLocal();
   renderPaymentSummary();
 };
-//this part calculate totla of cartQuantity in different scripts
+//this part calculate total of cartQuantity in different scripts
 export function getCartQuantity() {
   let cartQuantity = 0;
   cart.forEach((cartItem) => {
@@ -77,5 +77,5 @@ export function updateDeliveryOption(productId , deliveryOptionId){
 
   matchItem.deliveryOptionId = deliveryOptionId;
   addToLocal();
-  
+  renderPaymentSummary();
 }

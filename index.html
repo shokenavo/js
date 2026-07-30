@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: linear-gradient(135deg,
+          #ebc8d0 0%,
+          #FFD6E8 45%,
+          #FCE4F6 100%);
+    }
+
+    .main-one {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .yes-button {
+      background: #F8B4B4;
+      --direction: -50px;
+      color: #CFE8FF;
+      transition: transform 3s;
+    }
+
+    .no-button {
+      background: #CFE8FF;
+      color: #F8B4B4;
+    }
+
+    .yes-button,
+    .no-button {
+      border: 1px gray solid;
+      height: 110px;
+      width: 120px;
+      margin: 0px 10px;
+      border-radius: 15px;
+      font-size: 28px;
+    }
+
+    .text-div {
+      position: fixed;
+      top: 100px;
+      left: auto;
+      right: auto;
+      border: 2px solid lightblue;
+      width: 800px;
+      height: 80px;
+      background: lightsalmon;
+      font-size: 40px;
+      text-align: center;
+      padding-top: 30px;
+      color: rgb(0, 45, 248);
+    }
+    .moton{
+      display: flex;
+      justify-content: center;
+      align-items:center;
+      width:400px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main-one">
+    <h1>!یکی رو انتخاب کن</h1>
+    <div class="text-div">با من دیت میای ؟؟</div>
+    <div class="moton">
+      <div class="yes"><button class="yes-button" onclick="location.href='index2.html'">نه قابل تلاش </button></div>
+      <div class="no"><button class="no-button" onclick="location.href='index2.html'">نه خوشم نمیاد </button></div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+</body>
+
+</html>

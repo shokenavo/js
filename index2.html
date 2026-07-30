@@ -103,8 +103,7 @@
         no.style.top = `${newY}px`;
       }
     }
-
-    no.style.position = "fixed";
+    const rect = no.getBoundingClientRect();
     no.style.left = rect.left + "px";
     no.style.top = rect.top + "px";
     // کامپیوتر
