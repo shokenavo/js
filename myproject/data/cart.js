@@ -10,7 +10,7 @@ function addToLocal() {
 
 }
 // this runs when we press add to cart button and adds to cart 
-export function addtocart(productId) {
+export function addToCart(productId) {
   let matchItem;
 
   cart.forEach((cartItem) => {
