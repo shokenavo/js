@@ -1,16 +1,16 @@
 import { products } from '../data/products.js';
 import { renderPaymentSummary } from '../scripts/checkout/paymentSummary.js';
 class Cart {
-  localStoragekey;
+  #localStoragekey;
   constructor(localStoragekey){
-    this.localStoragekey = localStoragekey;
+    this.#localStoragekey = localStoragekey;
   }
   
 
-  cartItems = JSON.parse(localStorage.getItem(this.localStorageKey)) || [];
+  cartItems = JSON.parse(localStorage.getItem(this.#localStoragekey)) || [];
   
   addToLocal() {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+    localStorage.setItem(this.#localStoragekey, JSON.stringify(this.cartItems));
 
   }
 
