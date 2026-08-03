@@ -1,13 +1,15 @@
 import { products } from '../data/products.js';
 import { renderPaymentSummary } from '../scripts/checkout/paymentSummary.js';
-class Cart {
+
+export class Cart {
   #localStoragekey;
   constructor(localStoragekey){
     this.#localStoragekey = localStoragekey;
+    this.cartItems = JSON.parse(localStorage.getItem(this.#localStoragekey)) || [];
   }
   
 
-  cartItems = JSON.parse(localStorage.getItem(this.#localStoragekey)) || [];
+  
   
   addToLocal() {
     localStorage.setItem(this.#localStoragekey, JSON.stringify(this.cartItems));
@@ -83,14 +85,8 @@ class Cart {
 
 
 
-const cart = new Cart('cart-oop');
-const business = new Cart('businessCart');
+export let cart = new Cart('cart-oop');
 
-cart.addToCart('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
-business.addToCart('15b6fc6f-327a-4ec4-896f-486349e85a3d');
-
-console.log(cart);
-console.log(business);
 
 
 

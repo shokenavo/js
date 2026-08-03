@@ -1,5 +1,5 @@
 import { products, getProduct } from '../../data/products.js';
-import { cart, delete_cart_item, getCartQuantity, setCartQuantity, updateDeliveryOption } from '../../data/cart.js';
+import { cart} from '../../data/cart-class.js';
 import { formatCurrency } from '../utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { deliveryOptions } from '../../data/deliveryOptions.js';
@@ -15,7 +15,7 @@ createContainer();
 // this part makes container of container in checkout
 export function createContainer() {
   let checkout_product = '';
-  cart.forEach((item) => {
+  cart.cartItems.forEach((item) => {
 
     let selected_item = getProduct(item.productId)
 
@@ -44,7 +44,7 @@ export function createContainer() {
             </div>
             <div class="cart-item-detail">
               <div class="item-name">${selected_item.name}</div>
-              <div class="item-price">$${formatCurrency(selected_item.priceCents)}</div>
+              <div class="item-price">${selected_item.getPrice()}</div>
               <div class="item-number-${selected_item.id}"><span>Quantity:<span class="quantity-label js-quantity-lable-${selected_item.id}">${item.quantity}</span></span>
                 <a class="updatelink js-update-link" data-update-link = ${selected_item.id}>Update</a>
                 <input type="number" class="quantity-input js-quantity-input-${selected_item.id}" value="${item.quantity}" data-input-item= "${selected_item.id}">
@@ -69,7 +69,7 @@ export function createContainer() {
     element.addEventListener(('click'), () => {
       let productId = element.dataset.productId;
       let deliveryOptionId = element.dataset.deliveryOption;
-      updateDeliveryOption(productId, deliveryOptionId);
+      cart.updateDeliveryOption(productId, deliveryOptionId);
       createContainer();
 
     });
@@ -126,7 +126,7 @@ export function createContainer() {
   document.querySelectorAll('.js-delete-button').forEach((item) => {
     item.addEventListener('click', () => {
       const productId = item.dataset.deleteButton;
-      delete_cart_item(productId);
+      cart.delete_cart_item(productId);
       removeProductFromPage(productId);
     })
   })
@@ -140,7 +140,7 @@ export function createContainer() {
     let cartQuantity = 0;
 
 
-    cartQuantity = getCartQuantity();
+    cartQuantity = cart.getCartQuantity();
 
 
     let checkout_header = ``;
@@ -202,12 +202,12 @@ export function createContainer() {
     }
     if (entered_quantity === 0) {
 
-      delete_cart_item(productId);
+      cart.delete_cart_item(productId);
       removeProductFromPage(productId);
       return;
     }
 
-    setCartQuantity(productId, entered_quantity);
+    cart.setCartQuantity(productId, entered_quantity);
     checkoutHeaderQuantity();
     renderPaymentSummary();
     document.querySelector(`.js-quantity-lable-${productId}`).innerHTML = entered_quantity;
