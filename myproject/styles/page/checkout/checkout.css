@@ -220,3 +220,15 @@ main {
 .place-your-order-button:hover{
   background-color: rgba(220, 162, 5, 0.751);
 }
+.view-product{
+  display:inline-block;
+  text-decoration:none;
+  margin-top:10px;
+  padding: 8px 15px;
+  background-color: rgba(255, 212, 21, 0.93);
+  border: 1px solid rgb(242, 194, 0);
+  color:black;
+  border-radius:8px;
+  box-shadow: 0 2px 5px rgba(213, 217, 217, 0.5);
+}
+}

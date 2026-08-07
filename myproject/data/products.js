@@ -1,16 +1,17 @@
-import {formatCurrency} from '../scripts/utils/money.js';
+import { formatCurrency } from '../scripts/utils/money.js';
 
-export function getProduct(productId){
+export function getProduct(productId) {
   let matchingProduct;
 
-    products.forEach((p_item) => {
-      if (p_item.id === productId) {
-        matchingProduct = p_item;
-      }
+  products.forEach((p_item) => {
+    if (p_item.id === productId) {
+      matchingProduct = p_item;
+    }
 
-    });
-    return matchingProduct;
+  });
+  return matchingProduct;
 }
+
 
 class Product {
   id;
@@ -18,7 +19,7 @@ class Product {
   name;
   rating;
   priceCents;
-  constructor(productDeatail){
+  constructor(productDeatail) {
     this.id = productDeatail.id;
     this.image = productDeatail.image;
     this.name = productDeatail.name;
@@ -26,14 +27,31 @@ class Product {
     this.priceCents = productDeatail.priceCents;
 
   }
-  getStarsUrl(){
+  getStarsUrl() {
     return `images/ratings/rating-${this.rating.stars * 10}.png`
   }
 
-  getPrice(){
+  getPrice() {
     return `$${formatCurrency(this.priceCents)}`;
   }
+  extraInfoHTML(){
+    return '';
+  }
 }
+
+
+class Clothing extends Product {
+  constructor(productDeatail) {
+    super(productDeatail);
+    this.sizeChartLink = productDeatail.sizeChartLink;
+  }
+
+  extraInfoHTML(){
+    return `<a href="${this.sizeChartLink}" target="_blank">Size chart</a>`;
+  }
+}
+
+
 
 
 
@@ -696,6 +714,12 @@ export const products = [
       "mens"
     ]
   }
-].map((productDeatail)=>{
-  return new Product(productDeatail)
+].map((productDeatail) => {
+  if (productDeatail.type !== 'clothing') {
+    return new Product(productDeatail)
+  }
+  else return new Clothing(productDeatail);
 });
+products.forEach((product)=>{
+  console.log(product.constructor.name);
+})

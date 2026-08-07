@@ -24,6 +24,9 @@ products.forEach((product) => {
           <option value="9">9</option>
           <option value="10">10</option>
         </select>
+
+        ${product.extraInfoHTML()}
+
         <div class="adding-button-div"><button class="adding-button js-add-to-cart" data-product-id = "${product.id}">Add to Cart</button></div>
       </div>`
 })

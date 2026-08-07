@@ -1,5 +1,5 @@
 import { products, getProduct } from '../../data/products.js';
-import { cart} from '../../data/cart-class.js';
+import { cart } from '../../data/cart-class.js';
 import { formatCurrency } from '../utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { deliveryOptions } from '../../data/deliveryOptions.js';
@@ -14,6 +14,7 @@ createContainer();
 
 // this part makes container of container in checkout
 export function createContainer() {
+  createNoItem();
   let checkout_product = '';
   cart.cartItems.forEach((item) => {
 
@@ -85,7 +86,7 @@ export function createContainer() {
       let deliveryDate = isWeekend(deliveryOption);
       let dataString = deliveryDate.format('dddd , MMMM D');
 
-      
+
       let deliveryPrice = deliveryOption.priceCents === 0
         ? 'FREE'
         : `$${formatCurrency(deliveryOption.priceCents)} -`
@@ -128,6 +129,7 @@ export function createContainer() {
       const productId = item.dataset.deleteButton;
       cart.delete_cart_item(productId);
       removeProductFromPage(productId);
+      createNoItem();
     })
   })
 
@@ -195,6 +197,7 @@ export function createContainer() {
   let saveQuantity = function (productId) {
     let entered_quantity = Number(document.querySelector(`.js-quantity-input-${productId}`).value);
 
+    
 
     if (entered_quantity < 0 || !Number.isInteger(entered_quantity)) {
       alert('not valid input');
@@ -204,6 +207,7 @@ export function createContainer() {
 
       cart.delete_cart_item(productId);
       removeProductFromPage(productId);
+      createContainer();
       return;
     }
 
@@ -252,5 +256,17 @@ export function createContainer() {
       );
     }
     return deliveryDate;
+  }
+
+
+
+
+}
+export function createNoItem() {
+  if (cart.cartItems.length === 0) {
+    document.querySelector('.js-order-summary').innerHTML = `
+    <div class="empty-text">Your cart is empty.</div>
+    <a href="amazon.html" class="view-product">View products</button>
+  `;
   }
 }
